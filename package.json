@@ -1,0 +1,22 @@
+{
+  "name": "gchat",
+  "version": "0.0.0",
+  "description": "Greg Chat",
+  "main": "index.js",
+  "author": "Greg Brisebois",
+  "license": "MIT",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "dependencies": {
+    "cross-env": "^5.1.4",
+    "dotenv": "^5.0.1",
+    "express": "^4.16.3",
+    "express-validator": "^5.1.2",
+    "sequelize": "^4.37.6"
+  },
+  "devDependencies": {
+    "nodemon": "^1.17.3",
+    "sqlite3": "^4.0.0"
+  }
+}
