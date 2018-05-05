@@ -26,7 +26,9 @@ router.post('/register', validation.user, async (req, res) => {
 			passwordHash,
 		});
 		
-		res.json(user);
+		const session = await auth.createSession(user.id);
+		res.cookie('sessionKey', session.sessionKey, { maxAge: 900000 });
+		return res.status(200).json({session: { sessionKey: session.sessionKey }, user: user});
 	}
 })
 
@@ -47,7 +49,7 @@ router.post('/login', validation.login, async (req, res) => {
 			if(matches) {
 				const session = await auth.createSession(user.id);
 				res.cookie('sessionKey', session.sessionKey, { maxAge: 900000 });
-				return res.status(200).json({session: { sessionKey: session.sessionKey }});
+				return res.status(200).json({session: { sessionKey: session.sessionKey }, user: user});
 			}
 			else {
 				return res.status(400).json({error: "Password incorrect"});
