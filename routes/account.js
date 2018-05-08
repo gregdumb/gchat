@@ -61,4 +61,32 @@ router.post('/login', validation.login, async (req, res) => {
 	}
 })
 
+router.get('/continue', async (req, res) => {
+
+	const { sessionKey } = req.cookies;
+
+	if(!sessionKey) {
+		return res.status(400).json({error: "No session sent"});
+	}
+
+	const session = await models.Session.findOne({where: { sessionKey }});
+
+	if(!session) {
+		return res.status(400).json({error: "Session key invalid"});
+	}
+
+	const user = await models.User.findOne({where: {id: session.userId}});
+
+	if(!user) {
+		return res.status(400).json({error: "Session user not found"});
+	}
+
+	return res.json({
+		session: {
+			sessionKey
+		},
+		user: user,
+	})
+})
+
 module.exports = router;
