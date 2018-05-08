@@ -89,4 +89,22 @@ router.get('/continue', async (req, res) => {
 	})
 })
 
+router.get('/logout', async (req, res) => {
+	
+	const { sessionKey } = req.cookies;
+
+	if(!sessionKey) {
+		return res.status(400).json({error: "No session sent"});
+	}
+	
+	const session = await models.Session.findOne({where: { sessionKey }});
+	
+	//console.log('Logging out session', session.sessionKey);
+	
+	if(session) await session.destroy();
+	
+	return res.status(200).send("Logged out");
+	
+})
+
 module.exports = router;
