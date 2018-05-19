@@ -28,4 +28,11 @@ auth.createSession = async (userId) => {
 	return session;
 }
 
+auth.checkSession = async (sessionKey) => {
+	const session = await models.Session.findOne({ where: { sessionKey } });
+	
+	if(session) return session;
+	else return null;
+}
+
 module.exports = auth;
