@@ -15,7 +15,9 @@ module.exports = function(server) {
 			let session = await auth.checkSession(sessionKey);
 			
 			if(session) {
-				console.log("Session belongs to user", session.userId);
+				const { userId } = session;
+				//console.log("Session belongs to user", userId);
+				socket.join(userId);
 				next();
 			}
 			else {
@@ -29,5 +31,14 @@ module.exports = function(server) {
 	})
 	.on('connection', socket => {
 		
+		let keys = Object.keys(socket.rooms);
+		let room = socket.rooms[keys[0]];
+		const userId = parseInt(room);
+		
+		console.log("Session belongs to user", userId);
+		
+		socket.on('message', message => {
+			console.log(message);
+		})
 	})
 }
