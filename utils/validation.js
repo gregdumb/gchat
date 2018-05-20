@@ -22,4 +22,8 @@ validation.login = [
 	check('password').isLength({min: 4}).trim(),
 ]
 
+validation.conversation = [
+	check('userIds').isArray(),
+]
+
 module.exports = validation;

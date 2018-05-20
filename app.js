@@ -13,6 +13,7 @@ app.get('/', (req, res) => {
 const api = express.Router();
 
 api.use('/account', require('./routes/account'));
+api.use('/user', require('./routes/user'));
 
 app.use('/api', api);
 
